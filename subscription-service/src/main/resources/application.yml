@@ -1,0 +1,13 @@
+server:
+  port: 8081
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/subscription_db?authSource=admin
+  kafka:
+    bootstrap-servers: localhost:9092
+app:
+  kafka:
+    post-topic: "create-post-topic"
+    subscribtion-topic: "change-subscribtion-topic"
+    groupId: "create-post-group-id"
