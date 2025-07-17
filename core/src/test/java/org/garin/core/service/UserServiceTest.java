@@ -41,7 +41,7 @@ class UserServiceTest {
   private User testUser;
 
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     testUser = new User();
     testUser.setId(1L);
     testUser.setUsername("testuser");
@@ -49,7 +49,7 @@ class UserServiceTest {
   }
 
   @Test
-  void findById_UserExists_ReturnsUser() {
+  public void findById_UserExists_ReturnsUser() {
     when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
 
     User result = userService.findById(1L);
@@ -61,7 +61,7 @@ class UserServiceTest {
   }
 
   @Test
-  void findById_UserNotFound_ThrowsBlabberException() {
+  public void findById_UserNotFound_ThrowsBlabberException() {
     when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
     BlabberException exception =
@@ -71,7 +71,7 @@ class UserServiceTest {
   }
 
   @Test
-  void create_ValidUser_ReturnsSavedUser() {
+  public void create_ValidUser_ReturnsSavedUser() {
     String encodedPassword = "encodedPassword";
     when(passwordEncoder.encode("testPassword")).thenReturn(encodedPassword);
     when(userRepository.save(any(User.class))).thenReturn(testUser);
@@ -87,7 +87,7 @@ class UserServiceTest {
   }
 
   @Test
-  void deleteById_ValidId_DeletesUserAndSubscriptions() {
+  public void deleteById_ValidId_DeletesUserAndSubscriptions() {
     when(subscriptionRepository.deleteAllByFollowerIdOrFolloweeId(1L, 1L)).thenReturn(2);
 
     userService.deleteById(1L);

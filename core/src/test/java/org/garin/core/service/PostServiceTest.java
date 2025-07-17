@@ -44,7 +44,7 @@ public class PostServiceTest {
   private PostFilter filter;
 
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     pageable = PageRequest.of(0, 10);
 
     testPost = new Post();
@@ -61,7 +61,7 @@ public class PostServiceTest {
   }
 
   @Test
-  void findAll_ValidPageable_ReturnsPostPage() {
+  public void findAll_ValidPageable_ReturnsPostPage() {
     when(postRepository.findAll(pageable)).thenReturn(testPage);
 
     Page<Post> result = postService.findAll(pageable);
@@ -77,7 +77,7 @@ public class PostServiceTest {
   }
 
   @Test
-  void filter_ValidFilterAndPageable_ReturnsFilteredPostPage() {
+  public void filter_ValidFilterAndPageable_ReturnsFilteredPostPage() {
     when(postRepository.findAll(filter, pageable)).thenReturn(testPage);
 
     Page<Post> result = postService.filter(filter, pageable);
@@ -92,7 +92,7 @@ public class PostServiceTest {
   }
 
   @Test
-  void create_ValidPostAndAuthorId_ReturnsCreatedPost() {
+  public void create_ValidPostAndAuthorId_ReturnsCreatedPost() {
     when(userService.findById(1L)).thenReturn(testUser);
     when(postRepository.save(testPost)).thenReturn(testPost);
 
@@ -110,7 +110,7 @@ public class PostServiceTest {
   }
 
   @Test
-  void create_ValidPostAndNotExistendAuthor_ThrowsBlabberException() {
+  public void create_ValidPostAndNotExistendAuthor_ThrowsBlabberException() {
     when(userService.findById(1L))
         .thenThrow(new BlabberException("User with id: " + testUser.getId() + " not found"));
 
@@ -124,7 +124,7 @@ public class PostServiceTest {
   }
 
   @Test
-  void deleteById_ValidPostIdAndUserId_DeletesPost() {
+  public void deleteById_ValidPostIdAndUserId_DeletesPost() {
     when(postRepository.existsByAuthorIdAndId(1L, 1L)).thenReturn(true);
 
     postService.deleteById(1L, 1L);
@@ -134,7 +134,7 @@ public class PostServiceTest {
   }
 
   @Test
-  void deleteById_InvalidPostIdAndUserId_ThrowsBlabberException() {
+  public void deleteById_InvalidPostIdAndUserId_ThrowsBlabberException() {
     when(postRepository.existsByAuthorIdAndId(1L, 1L)).thenReturn(false);
 
     BlabberException exception =
